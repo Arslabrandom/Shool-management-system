@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libertinus+Keyboard&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Lato", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0 48px;
+}
+
+.loader {
+    width: 45px;
+    aspect-ratio: 1;
+    --c: no-repeat linear-gradient(#000 calc(50% - 10px), #0000 0 calc(50% + 10px), #000 0);
+    background:
+        var(--c) 0% 100%,
+        var(--c) 50% 100%,
+        var(--c) 100% 100%;
+    background-size: 20% calc(200% + 20px);
+    animation: l4 1s infinite linear;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.loader-body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(37, 37, 37, 0.507);
+    z-index: 1;
+    backdrop-filter: blur(18px);
+    display: none;
+}
+
+@keyframes l4 {
+    33% {
+        background-position: 0% 50%, 50% 100%, 100% 100%
+    }
+
+    50% {
+        background-position: 0% 0%, 50% 50%, 100% 100%
+    }
+
+    66% {
+        background-position: 0% 0%, 50% 0%, 100% 50%
+    }
+
+    100% {
+        background-position: 0% 0%, 50% 0%, 100% 0%
+    }
+}
+
+/* --------------- NEW UI PARTITON ---------------- */
+
+/* .lato-regular {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+} */
+
+/* .libertinus-keyboard-regular {
+  font-family: "Libertinus Keyboard", system-ui;
+  font-weight: 400;
+  font-style: normal;
+} */
+
+.main-navbar {
+    padding: 18px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid black;
+}
+
+.nav-logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.nav-links {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    margin-right: 28px;
+    gap: 28px;
+}
+
+.nav-links>a {
+    text-decoration: none;
+    color: black;
+}
+
+.auth-btn {
+    padding: 8px 18px;
+    border-radius: 50px;
+    border: 1px solid black;
+    background-color: white;
+    font-size: 1rem;
+    transition: background-color, color 200ms ease-in;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.auth-btn:hover {
+    color: white;
+    background-color: black;
+}
+
+#dashboardbtn {
+    display: none;
+}
+
+.message-1 {
+    text-align: center;
+    margin: 58px 0;
+    font-size: 3rem;
+    font-family: "Libertinus Keyboard", system-ui;
+}
+
+.message-2 {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.message-3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin: 32px 0;
+    font-size: 1.4rem;
+    gap: 24px;
+}
+
+.enrollbtn {
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 24px;
+    border: 1px solid black;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color, color 200ms ease-in;
+}
+
+.enrollbtn:hover {
+    background-color: lightgreen;
+    color: darkgreen;
+}
+
+.enrollbtn > span {
+    font-size: 1.2rem;
+}
+
+.message-4 {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 48px;
+    margin-bottom: 48px;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 18px;
+    margin: 32px 0;
+}
+
+.feature {
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    flex-direction: column;
+    padding: 24px;
+    font-size: 1.4rem;
+}
+
+.feature > span {
+    margin: 50px 0;
+    font-size: 3rem;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: orange;
+    margin: 88px 0 88px 0;
+}
+
+.stat > span {
+    font-size: 1.2rem;
+    color: black;
+    margin-top: 6px;
+}
+
+.lstat {
+    border-left: 1px solid black;
+}
+
+.rstat {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}
+
+.main-footer {
+    padding: 34px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-top: 1px solid black;
+}
+
+.line-1 {
+    font-size: 1.6rem;
+}
+
+.line-2 {
+    font-size: 1.2rem;
+}
+
+#dynamic-text {
+    transition: all 400ms ease-in-out;
+}

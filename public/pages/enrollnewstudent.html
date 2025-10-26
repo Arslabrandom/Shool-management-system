@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Admission - TTS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libertinus+Keyboard&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Lato", sans-serif;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Enroll new</h1>
+
+    <script>
+        let m;
+        window.onload = async () => {
+            try {
+                const response = await fetch('/enrollnew')
+                const data = await response.json();
+                m = JSON.parse(data);
+            } catch (error) {
+                console.error(error)
+            } finally {
+                let div = document.createElement('div');
+                div.innerHTML = `<span>Message: ${m.message}</span></br><span>Last Date: ${m.lastenrollmentdate}</span></br><span>Status: ${m.status}</span>`
+                document.body.appendChild(div);
+            }
+        }
+    </script>
+</body>
+
+</html>

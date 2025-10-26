@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaint Box</title>
+    <link rel="stylesheet" href="css/ancomplaintbox.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libertinus+Keyboard&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Lato", sans-serif;
+            box-sizing: border-box;
+        }
+
+        .main-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .main-container>form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .jj {
+            border: 1px solid grey;
+            padding: 12px;
+            width: 100%;
+        }
+
+        .msg-1 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            align-self: flex-start;
+        }
+
+        #cBody {
+            resize: none;
+            border: 1px solid grey;
+            padding: 12px;
+        }
+
+        #cBody:focus {
+            border: 1px solid black;
+        }
+
+        #sBtn {
+            border: 1px solid green !important;
+            background-color: lightgreen;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-container" id="mmcc">
+        <div class="message msg-1">It's Sad to hear from you</div>
+        <form action="#" id="main-form">
+            <input type="text" placeholder="Subject" required class="jj" id="subject" max="100">
+            <textarea name="complaint-body" placeholder="Description" id="cBody" rows="12" cols="60"
+                required></textarea>
+            <input type="submit" class="jj" id="sBtn">
+        </form>
+    </div>
+    <div class="loader-body">
+        <div class="loader"></div>
+    </div>
+    <script src="js/ancomplaintbox.js"></script>
+</body>
+
+</html>
