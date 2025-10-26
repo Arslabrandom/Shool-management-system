@@ -8,172 +8,22 @@
     <link rel="stylesheet" href="css/login.css">
     <link rel="stylesheet" href="css/utils.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libertinus+Keyboard&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            font-family: "Lato", sans-serif;
-            box-sizing: border-box;
-        }
-
-        /* .lato-regular {
-  font-family: "Lato", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-} */
-
-        /* .libertinus-keyboard-regular {
-  font-family: "Libertinus Keyboard", system-ui;
-  font-weight: 400;
-  font-style: normal;
-} */
-
-        .heading-1 {
-            font-size: 2rem;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: row;
-            gap: 12px;
-            margin-bottom: 32px;
-        }
-
-        .heading-1>span {
-            height: 40px;
-            width: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-        }
-
-        .main-wrapper {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: fit-content;
-            width: fit-content;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .login-type-group {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: row;
-            gap: 12px;
-        }
-
-        .rayta {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 18px;
-            border: 1px solid black;
-            border-radius: 22px;
-            font-size: 1.1rem;
-            background-color: white;
-            margin: 0;
-            gap: 12px;
-            cursor: pointer;
-            transition: background-color, color 400ms ease-in-out;
-        }
-
-        .rayta:hover {
-            background-color: black;
-            color: white;
-        }
-
-        #loginForm {
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            flex-direction: column;
-            gap: 40px;
-            width: 100%;
-            border: 1px solid black;
-            border-radius: 38px;
-            padding: 32px
-        }
-
-        .form-group {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            flex-direction: row;
-            font-size: 1.1rem;
-            border: 1px solid black;
-            border-radius: 50px;
-            padding: 12px 22px;
-            width: 100%;
-            gap: 10px;
-        }
-
-        .form-group>input {
-            font-size: 1rem;
-            line-height: 20px;
-            padding: 2px 6px;
-            width: 100%;
-            border: none;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        .form-group>input:focus {
-            outline: none;
-        }
-
-        .form-group>::-webkit-outer-spin-button,
-        .form-group>input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .button-group {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-        }
-
-        .lgbtn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 8px 18px;
-            border: 1px solid black;
-            border-radius: 50px;
-            line-height: 20px;
-            font-size: 1.1rem;
-            background-color: white;
-        }
-
-        .lgbtn:hover {
-            background-color: black;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 
 <body>
+    <div class="toast-overlay" id="toast-overlay"></div>
     <div class="main-wrapper">
         <div class="heading-1">
             <span class="material-symbols-outlined">
                 login
             </span>
             Login
+            <div id="roleDisplay" class="rld">User type not selected</div>
         </div>
         <form action="#" id="loginForm">
             <div class="login-type-group">
-                <span class="type-d rayta" value="studentslogin">
+                <span class="type-d rayta">
                     <span class="val">
                         Student
                     </span>
@@ -181,7 +31,7 @@
                         backpack
                     </span>
                 </span>
-                <span class="type-d rayta" value="teacherslogin">
+                <span class="type-d rayta">
                     <span class="val">
                         Teacher
                     </span>
@@ -189,7 +39,7 @@
                         eyeglasses_2
                     </span>
                 </span>
-                <span class="type-d rayta" value="adminlogin">
+                <span class="type-d rayta">
                     <span class="val">
                         Admin
                     </span>
@@ -197,7 +47,7 @@
                         admin_panel_settings
                     </span>
                 </span>
-                <span class="type-d rayta" value="parentlogin">
+                <span class="type-d rayta">
                     <span class="val">
                         Parent
                     </span>
@@ -212,7 +62,7 @@
                         person
                     </span>
                 </label>
-                <input type="number" id="id" name="id" required>
+                <input type="number" placeholder="User ID" id="id" name="id" required>
             </div>
             <div class="form-group">
                 <label for="password">
@@ -220,79 +70,23 @@
                         password
                     </span>
                 </label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" id="password" placeholder="Password" name="password" required>
+                <span class="togglePassword material-symbols-outlined" style="user-select: none; cursor: pointer;">
+                    visibility_off
+                </span>
             </div>
             <div class="button-group">
+                <a href="/underdevelopment">Forgot password?</a>
                 <button type="submit" class="lgbtn">
                     Login
                 </button>
-                <a href="#">Need help recovering the password</a>
             </div>
         </form>
     </div>
-        <div class="loader-body">
+    <div class="loader-body">
         <div class="loader"></div>
     </div>
-    <script>
-        let role;
-        let typeSelection = ''
-        const formL = document.querySelector('#loginForm');
-        const loader = document.querySelector('.loader-body');
-
-        async function Login(role, creds) {
-            loader.style.display = 'block';
-            try {
-                const response = await fetch(`/login/${role}`, {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(creds),
-                    credentials: 'include'
-                })
-                const data = await response.json();
-                if (data.login) {
-                    alert(data.message);
-                    window.location.href = '/dashboard';
-                } else {
-                    alert(data.message)
-                }
-            } catch (error) {
-                console.error(error);
-            } finally {
-                loader.style.display = 'none';
-            }
-        }
-
-        const typeSelectors = document.querySelectorAll('.rayta');
-        typeSelectors.forEach((selector) => {
-            selector.addEventListener('click', () => {
-                typeSelectors.forEach((e) => {
-                    e.style.backgroundColor = 'white'
-                    e.style.color = 'black'
-                })
-                const n = selector.querySelector('.val');
-                selector.style.backgroundColor = 'black'
-                selector.style.color = 'white'
-                typeSelection = n.innerHTML.trim().toLowerCase()
-            })
-        })
-
-        formL.addEventListener('submit', (e) => {
-            e.preventDefault();
-            if (typeSelection == '') {
-                return alert('please select a type')
-                
-            } else {
-                const creds = {
-                    userid: document.querySelector('#id').value,
-                    password: document.querySelector('#password').value
-                }
-                Login(typeSelection, creds);
-            }
-        })
-
-    </script>
+    <script src="/js/login.js"></script>
 </body>
 
 </html>

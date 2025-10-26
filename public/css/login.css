@@ -1,0 +1,305 @@
+@import url(https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libertinus+Keyboard&display=swap);
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Lato", sans-serif;
+    box-sizing: border-box
+}
+
+.toast {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    max-width: 300px;
+    background: #fff;
+    padding: .5rem;
+    border-radius: 4px;
+    box-shadow: -1px 1px 10px rgb(0 0 0 / .3);
+    z-index: 1023;
+    animation: slideInRight 0.3s ease-in-out forwards, fadeOut 0.5s ease-in-out forwards 3s;
+    transform: translateX(110%)
+}
+
+.toast.closing {
+    animation: slideOutRight 0.5s ease-in-out forwards
+}
+
+.toast-progress {
+    position: absolute;
+    display: block;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: #b7b7b7;
+    animation: toastProgress 3s ease-in-out forwards
+}
+
+.toast-content-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+.toast-icon {
+    padding: .35rem .5rem;
+    font-size: 1.5rem
+}
+
+.toast-message {
+    flex: 1;
+    font-size: .9rem;
+    color: #000;
+    padding: .5rem
+}
+
+.toast.toast-success {
+    background: #95eab8
+}
+
+.toast.toast-success .toast-progress {
+    background-color: #2ecc71
+}
+
+.toast.toast-danger {
+    background: #efaca5
+}
+
+.toast.toast-danger .toast-progress {
+    background-color: #e74c3c
+}
+
+.toast.toast-info {
+    background: #bddaed
+}
+
+.toast.toast-info .toast-progress {
+    background-color: #3498db
+}
+
+.toast.toast-warning {
+    background: #ead994
+}
+
+.toast.toast-warning .toast-progress {
+    background-color: #f1c40f
+}
+
+@keyframes slideInRight {
+    0% {
+        transform: translateX(110%)
+    }
+
+    75% {
+        transform: translateX(-10%)
+    }
+
+    100% {
+        transform: translateX(0%)
+    }
+}
+
+@keyframes slideOutRight {
+    0% {
+        transform: translateX(0%)
+    }
+
+    25% {
+        transform: translateX(-10%)
+    }
+
+    100% {
+        transform: translateX(110%)
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1
+    }
+
+    100% {
+        opacity: 0
+    }
+}
+
+@keyframes toastProgress {
+    0% {
+        width: 100%
+    }
+
+    100% {
+        width: 0%
+    }
+}
+
+.heading-1 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    gap: 12px;
+    width: 100%;
+    border-bottom: 1px solid #000;
+    padding: 8px 6px
+}
+
+.heading-1>span {
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem
+}
+
+.main-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #000;
+    border-radius: 18px
+}
+
+.login-type-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    flex-direction: row;
+    gap: 12px
+}
+
+.rayta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 24px;
+    border: 1px solid #000;
+    border-radius: 14px;
+    font-size: 1.6rem;
+    background-color: #fff;
+    margin: 0;
+    gap: 12px;
+    cursor: pointer;
+    transition: background-color, color 400ms ease-in-out
+}
+
+.val {
+    display: none
+}
+
+.rayta:hover {
+    background-color: #000;
+    color: #fff
+}
+
+#loginForm {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+    padding: 32px
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    font-size: 1.1rem;
+    border: 1px solid #000;
+    border-radius: 50px;
+    padding: 12px 22px;
+    width: 100%;
+    gap: 10px
+}
+
+.form-group>input {
+    font-size: 1rem;
+    line-height: 20px;
+    padding: 2px 6px;
+    width: 100%;
+    border: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.form-group>input:focus {
+    outline: none
+}
+
+.form-group>::-webkit-outer-spin-button,
+.form-group>input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0
+}
+
+.button-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 2px 0 4px
+}
+
+.lgbtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    padding: 10px 28px;
+    border: 1px solid #000;
+    border-radius: 50px;
+    line-height: 20px;
+    font-size: 1.1rem;
+    background-color: #fff;
+    transition: background-color, color 400ms ease-in-out
+}
+
+.lgbtn:hover {
+    background-color: #000;
+    color: #fff
+}
+
+.togglePassword {
+    transition: all 400ms ease-in-out
+}
+
+#roleDisplay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .8rem;
+    font-weight: normal !important;
+    transition: all 400ms ease-in-out;
+    padding: 0 4px;
+    line-height: 20px;
+    margin-left: auto;
+    margin-right: 12px;
+    border-radius: 6px;
+    color: red;
+    background-color: #fff;
+    border: 1px solid red
+}
+        /* .lato-regular {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+} */
+
+        /* .libertinus-keyboard-regular {
+  font-family: "Libertinus Keyboard", system-ui;
+  font-weight: 400;
+  font-style: normal;
+} */
