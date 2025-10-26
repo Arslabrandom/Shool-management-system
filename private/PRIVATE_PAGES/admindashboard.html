@@ -5,108 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Admin</title>
-    <style>
-        .data {
-            display: flex;
-            gap: 12px;
-            flex-direction: column;
-        }
-
-        .card {
-            border: 2px solid black;
-            padding: 12px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .loader {
-            width: 45px;
-            aspect-ratio: 1;
-            --c: no-repeat linear-gradient(#000 calc(50% - 10px), #0000 0 calc(50% + 10px), #000 0);
-            background:
-                var(--c) 0% 100%,
-                var(--c) 50% 100%,
-                var(--c) 100% 100%;
-            background-size: 20% calc(200% + 20px);
-            animation: l4 1s infinite linear;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
-        }
-
-        .loader-body {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 100%;
-            background-color: rgba(37, 37, 37, 0.507);
-            z-index: 1;
-            display: none;
-        }
-
-        @keyframes l4 {
-            33% {
-                background-position: 0% 50%, 50% 100%, 100% 100%
-            }
-
-            50% {
-                background-position: 0% 0%, 50% 50%, 100% 100%
-            }
-
-            66% {
-                background-position: 0% 0%, 50% 0%, 100% 50%
-            }
-
-            100% {
-                background-position: 0% 0%, 50% 0%, 100% 0%
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/css/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
 <body>
-    <h1>Admins dashboard <button>Logout</button></h1>
-    <div class="data">
-    </div>
-    <div class="loader-body">
-        <div class="loader"></div>
-    </div>
-    <script>
-        const display = document.querySelector('.data');
-        const loader = document.querySelector('.loader-body');
-        window.onload = () => {
-            console.log('Admin dashboard loaded successfully');
-            fetchStudents()
-        }
-        async function fetchStudents() {
-            try {
-                loader.style.display = 'block';
-                const response = await fetch('/getdata/dummy', {
-                    method: 'GET'
-                })
-                const data = await response.json();
-                let frmnt = JSON.parse(data);
-                let filtered = frmnt.find(d => d.language);
-                console.log(filtered.language)
-                // filtered.forEach((e) => {
-                //     const elem = document.createElement('div');
-                //     elem.classList.add('card');
-                //     elem.innerHTML = `<span><strong>Id: </strong><span>${e.id}</span></span>
-                //                       <span><strong>Name: </strong><span>${e.name}</span></span>
-                //                       <span><strong>Language: </strong><span>${e.language}</span></span>
-                //                       <span><strong>Bio: </strong><span>${e.bio}</span></span>`
-                //     display.appendChild(elem);
-                // });
-            } catch (error) {
-                console.error(error);
-            } finally {
-                loader.style.display = 'none';
-            }
-        }
-    </script>
+    <nav class="navbar">
+        <div class="logo">This & That School</div>
+        <div class="nav-controller-menu">
+            <div class="dashboard-name">ADMIN</div>
+            <div class="admin-name">Shrikant rawat</div>
+        </div>
+        <div class="clock"></div>
+        <button id="logout-btn" onclick="logout()">
+            <span class="material-symbols-outlined logout-btn-icon">
+                logout
+            </span>
+            LOGOUT
+        </button>
+    </nav>
+    <script src="/js/admin.js"></script>
 </body>
 
 </html>

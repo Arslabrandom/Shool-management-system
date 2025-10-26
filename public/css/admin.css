@@ -1,0 +1,81 @@
+@import url(https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libertinus+Keyboard&display=swap);
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Lato", sans-serif;
+}
+
+body {
+    padding: 0 48px;
+}
+
+.navbar {
+    border-bottom: 1px solid black;
+    width: 100%;
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-right: 22px;
+}
+
+.nav-controller-menu {
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.dashboard-name {
+    font-family: 'Courier New', Courier, monospace;
+    color: green;
+    padding: 2px 6px;
+    border: 1px solid green;
+    border-radius: 4px;
+    background-color: lightgreen;
+    margin-right: 12px;
+}
+
+.admin-name {
+    font-family: monospace;
+    font-size: 1rem;
+    margin-right: 12px;
+}
+
+#logout-btn {
+    font-family: 'Courier New', Courier, monospace;
+    color: red;
+    border-radius: 4px;
+    border: 1px solid red;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 6px;
+    gap: 2px;
+    font-size: 1rem;
+    transition: color, background-color 400ms ease-in-out;
+    cursor: pointer;
+    margin-left: 12px;
+}
+
+.logout-btn-icon {
+    font-size: .8rem !important;
+}
+
+#logout-btn:hover {
+    color: white;
+    background-color: red;
+}
+
+.clock {
+    font-family: 'Courier New', Courier, monospace;
+}

@@ -121,6 +121,19 @@ const filterExpiredSessions = async () => {
     }
 }
 
+export const removeSession = async (uuid) => {
+    try {
+        const query = 'DELETE FROM sessions WHERE sessionid = ?';
+        const [result] = await pool.execute(query, [uuid]);
+        if (result.affectedRows === 0) {
+            return { filtered: false, message: 'Session not found', errorno: 404 };
+        }
+        return { filtered: true, message: 'Logged out', errorno: undefined }
+    } catch (err) {
+        return { filtered: false, message: err.sqlMessage, errorno: err.errno }
+    }
+}
+
 const filterDuplicateSessions = async (userid) => {
     try {
         const query = `DELETE FROM sessions WHERE userid = ${userid}`;

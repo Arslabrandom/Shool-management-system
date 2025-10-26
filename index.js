@@ -3,7 +3,7 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
-import { initLogin, initSignup, findSession, checkForValidRole } from './private/IAM/identity_management.js'
+import { initLogin, initSignup, findSession, checkForValidRole, removeSession } from './private/IAM/identity_management.js'
 import { authenticator, allowTo } from './private/IAM/access_management.js';
 import { dashboards, userTypes, ROLES } from './private/constants/constants.js';
 import * as errors from './private/constants/errors.js';
@@ -19,7 +19,7 @@ const anComplaintBoxPath = path.join(__dirname, 'public', 'pages', 'ancomplaintb
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 40,
+    max: 400,
     message: errors.limiter_error,
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false,  // Disable the `X-RateLimit-*` headers
@@ -42,7 +42,7 @@ app.post('/login/:role', async (req, res) => {
     }
     const logger = await initLogin(obj, userTypes[role])
     if (logger.login) {
-        res.cookie('sessionId', logger.sessionId, { httpOnly: true, maxAge: 12 * 60 * 1000, sameSite: 'strict' });
+        res.cookie('sessionId', logger.sessionId, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000, sameSite: 'strict' });
         return res.json({ login: true, message: "Logged In", type: null, errorno: null })
     } else {
         return res.json(logger)
@@ -79,6 +79,14 @@ app.post('/enroll/teacher', allowTo([ROLES.ADMIN]), async (req, res) => {
 
 app.get('/login', (req, res) => {
     res.sendFile(loginPage);
+})
+
+app.post('/logout', authenticator, async (req, res) => {
+    const { sessionId } = req.cookies;
+    const l = sessionId.toString();
+    const sessionRemover = await removeSession(l);
+    res.clearCookie('sessionId', { httpOnly: true, sameSite: 'strict' });
+    res.json({message: "logged out"});
 })
 
 app.get('/ancomplaintbox', (req, res) => {
