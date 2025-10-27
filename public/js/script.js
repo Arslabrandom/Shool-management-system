@@ -5,6 +5,7 @@ const dynamicText = document.querySelector('#dynamic-text');
 const mainNav = document.querySelector('.main-navbar');
 
 window.onload = () => {
+    console.log('Script initialised');
     mainNav.classList.add('fadein');
     prvL(true);
 }
@@ -29,10 +30,6 @@ const prvL = async (greet) => {
         }
     } catch (error) {}
 }
-
-setTimeout(() => {
-    setInterval(() => {prvL(false)}, 1000);
-}, 2000)
 
 async function arm96mxjck() {
     window.location.href = '/dashboard'
