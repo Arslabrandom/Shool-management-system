@@ -31,10 +31,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 import loginProcessor from './routes/LoginRoutes.js';
 import logoutProcessor from './routes/LogoutRoutes.js';
 import dashboardProcessor from './routes/DashboardRoutes.js';
+import pingProcessor from './routes/pingRoute.js';
 
 app.use('/login', loginProcessor);
 app.use('/logout', logoutProcessor);
 app.use('/dashboard', dashboardProcessor);
+app.use('/pingForPrevLogin', pingProcessor);
 
 app.post('/enroll/student', allowTo([ROLES.ADMIN]), async (req, res) => {
     const { username, password } = req.body;
@@ -64,10 +66,6 @@ app.post('/enroll/teacher', allowTo([ROLES.ADMIN]), async (req, res) => {
     return res.json(signer);
 })
 
-app.post('/logout', authenticator, async (req, res) => {
-
-})
-
 app.get('/ancomplaintbox', (req, res) => {
     res.sendFile(anComplaintBoxPath);
 })
@@ -81,16 +79,6 @@ app.post('/anonymouscomplaint', (req, res) => {
         const complaintno = `ANC-${100000 + Math.round(Math.random() * 99999)}`
         res.json({ Complaintno: complaintno });
     }
-})
-
-app.post('/pingForPrevLogin', async (req, res) => {
-    const {sessionId} = req.cookies;
-    if (!sessionId) { return res.json({ prevLogged: false, username: null}); }
-    const session = await findSession(sessionId);
-    if (session.session) {
-        return res.json({ prevLogged: true, username: session.session.username });
-    }
-    res.json({ prevLogged: false, username: null })
 })
 
 app.get('/underdevelopment', (req, res) => {

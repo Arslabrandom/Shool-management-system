@@ -5,7 +5,6 @@ const dynamicText = document.querySelector('#dynamic-text');
 const mainNav = document.querySelector('.main-navbar');
 
 window.onload = () => {
-    console.log('Script initialised');
     mainNav.classList.add('fadein');
     prvL(true);
 }
@@ -14,6 +13,7 @@ loginBtn.style.display='none';
 
 const prvL = async (greet) => {
     try {
+        loader.style.display = 'block';
         const response = await fetch('/pingForPrevLogin', { method: 'POST' })
         const result = await response.json();
         if (result.prevLogged) {
@@ -28,7 +28,10 @@ const prvL = async (greet) => {
             loginBtn.style.display = 'flex'
             dashboardBtn.style.display = 'none'
         }
-    } catch (error) {}
+    } catch (error) {
+    } finally {
+        loader.style.display = 'none'
+    }
 }
 
 async function arm96mxjck() {
