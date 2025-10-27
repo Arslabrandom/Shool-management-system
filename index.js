@@ -3,7 +3,7 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
-import { initLogin, initSignup, findSession, checkForValidRole, removeSession } from './private/IAM/identity_management.js'
+import { initSignup, findSession} from './private/IAM/identity_management.js'
 import { authenticator, allowTo } from './private/IAM/access_management.js';
 import { dashboards, userTypes, ROLES } from './private/constants/constants.js';
 import * as errors from './private/constants/errors.js';
@@ -13,8 +13,6 @@ const PORT = process.env.PORT || 3200;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const loginPage = path.join(__dirname, 'public', 'pages', 'login.html');
-const enrollPage = path.join(__dirname, 'public', 'pages', 'enrollnewstudent.html');
 const anComplaintBoxPath = path.join(__dirname, 'public', 'pages', 'ancomplaintbox.html');
 
 const limiter = rateLimit({
@@ -30,24 +28,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.post('/login/:role', async (req, res) => {
-    const { userid, password } = req.body;
-    const { role } = req.params;
-    const roleVerifier = checkForValidRole(role);
-    if (!userid || !password) { return res.status(400).json({ message: "Incomplete credentials" }) }
-    if (!roleVerifier) { return res.status(400).json({ message: 'Invalid role' }) }
-    const obj = {
-        userid: userid,
-        password: password
-    }
-    const logger = await initLogin(obj, userTypes[role])
-    if (logger.login) {
-        res.cookie('sessionId', logger.sessionId, { httpOnly: true, maxAge: 12 * 60 * 60 * 1000, sameSite: 'strict' });
-        return res.json({ login: true, message: "Logged In", type: null, errorno: null })
-    } else {
-        return res.json(logger)
-    }
-})
+import loginProcessor from './routes/LoginRoutes.js';
+import logoutProcessor from './routes/LogoutRoutes.js';
+
+app.use('/login', loginProcessor);
+app.use('/logout', logoutProcessor);
 
 app.post('/enroll/student', allowTo([ROLES.ADMIN]), async (req, res) => {
     const { username, password } = req.body;
@@ -77,16 +62,8 @@ app.post('/enroll/teacher', allowTo([ROLES.ADMIN]), async (req, res) => {
     return res.json(signer);
 })
 
-app.get('/login', (req, res) => {
-    res.sendFile(loginPage);
-})
-
 app.post('/logout', authenticator, async (req, res) => {
-    const { sessionId } = req.cookies;
-    const l = sessionId.toString();
-    const sessionRemover = await removeSession(l);
-    res.clearCookie('sessionId', { httpOnly: true, sameSite: 'strict' });
-    res.json({message: "logged out"});
+
 })
 
 app.get('/ancomplaintbox', (req, res) => {
