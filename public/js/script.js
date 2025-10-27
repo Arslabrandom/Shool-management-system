@@ -2,29 +2,41 @@ const loader = document.querySelector('.loader-body');
 const loginBtn = document.querySelector('#loginbtn');
 const dashboardBtn = document.querySelector('#dashboardbtn');
 const dynamicText = document.querySelector('#dynamic-text');
+const mainNav = document.querySelector('.main-navbar');
 
-window.onload = async () => {
+window.onload = () => {
+    mainNav.classList.add('fadein');
+    prvL(true);
+}
+
+
+loginBtn.style.display='none';
+
+const prvL = async (greet) => {
     try {
-        loader.style.display = 'block'
         const response = await fetch('/pingForPrevLogin', { method: 'POST' })
         const result = await response.json();
         if (result.prevLogged) {
             let str = result.username;
             correctedString = str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-            greetUser(correctedString);
+            if (greet) {
+                greetUser(correctedString);
+            }
             dashboardBtn.style.display = 'flex'
             loginBtn.style.display = 'none'
         } else {
             loginBtn.style.display = 'flex'
             dashboardBtn.style.display = 'none'
-            greetUser();
+            if (greet) {
+                greetUser();
+            }
         }
-    } catch (error) {
-        console.error('Error: ', error)
-    } finally {
-        loader.style.display = 'none'
-    }
+    } catch (error) {}
 }
+
+setTimeout(() => {
+    setInterval(() => {prvL(false)}, 1000);
+}, 2000)
 
 async function arm96mxjck() {
     window.location.href = '/dashboard'
@@ -33,7 +45,12 @@ async function arm96mxjck() {
 function greetUser(username) {
     if (username) {
         dynamicText.innerHTML = `Welcome back Mr. ${username}`;
-        setTimeout(() => { dynamicText.innerHTML = 'This & That School' }, 3000)
+        dynamicText.classList.add('slidein')
+        setTimeout(() => {
+            dynamicText.innerHTML = 'This & That School';
+            dynamicText.classList.remove('slidein');
+            dynamicText.classList.add('fadein');
+        }, 3000)
     } else {
         dynamicText.innerHTML = 'Welcome to This & That School';
         setTimeout(() => { dynamicText.innerHTML = 'This & That School' }, 3000)

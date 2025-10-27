@@ -13,9 +13,9 @@ export const ROLES = {
 };
 
 export const dashboards = {
-    admin: '/private/PRIVATE_PAGES/admindashboard.html',
-    student: '/private/PRIVATE_PAGES/studentdashboard.html',
-    teacher: '/private/PRIVATE_PAGES/teacherdashboard.html',
-    parent: '/private/PRIVATE_PAGES/parentdashboard.html',
-    err: '/private/PRIVATE_PAGES/dashboarderror.html',
+    admin: '../private/PRIVATE_PAGES/admindashboard.html',
+    student: '../private/PRIVATE_PAGES/studentdashboard.html',
+    teacher: '../private/PRIVATE_PAGES/teacherdashboard.html',
+    parent: '../private/PRIVATE_PAGES/parentdashboard.html',
+    err: '../private/PRIVATE_PAGES/dashboarderror.html',
 }

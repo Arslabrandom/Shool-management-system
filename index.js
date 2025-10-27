@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import { initSignup, findSession} from './private/IAM/identity_management.js'
 import { authenticator, allowTo } from './private/IAM/access_management.js';
-import { dashboards, userTypes, ROLES } from './private/constants/constants.js';
+import { userTypes, ROLES } from './private/constants/constants.js';
 import * as errors from './private/constants/errors.js';
 
 const app = express();
@@ -30,9 +30,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 import loginProcessor from './routes/LoginRoutes.js';
 import logoutProcessor from './routes/LogoutRoutes.js';
+import dashboardProcessor from './routes/DashboardRoutes.js';
 
 app.use('/login', loginProcessor);
 app.use('/logout', logoutProcessor);
+app.use('/dashboard', dashboardProcessor);
 
 app.post('/enroll/student', allowTo([ROLES.ADMIN]), async (req, res) => {
     const { username, password } = req.body;
@@ -81,23 +83,14 @@ app.post('/anonymouscomplaint', (req, res) => {
     }
 })
 
-app.get('/dashboard', authenticator, async (req, res) => {
-    const { sessionId } = req.cookies;
-    const session = await findSession(sessionId);
-    if (session.session) {
-        return res.sendFile(path.join(__dirname, dashboards[session.session.role]))
-    }
-    res.sendFile(path.join(__dirname, dashboards['err']));
-})
-
 app.post('/pingForPrevLogin', async (req, res) => {
     const {sessionId} = req.cookies;
-    if (!sessionId) { return res.status(403).json({ prevLogged: false, username: null}); }
+    if (!sessionId) { return res.json({ prevLogged: false, username: null}); }
     const session = await findSession(sessionId);
     if (session.session) {
         return res.json({ prevLogged: true, username: session.session.username });
     }
-    res.status(403).json({ prevLogged: false, username: null })
+    res.json({ prevLogged: false, username: null })
 })
 
 app.get('/underdevelopment', (req, res) => {
