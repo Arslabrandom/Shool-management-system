@@ -9,7 +9,6 @@ window.onload = () => {
     prvL(true);
 }
 
-
 loginBtn.style.display='none';
 
 const prvL = async (greet) => {
@@ -27,9 +26,6 @@ const prvL = async (greet) => {
         } else {
             loginBtn.style.display = 'flex'
             dashboardBtn.style.display = 'none'
-            if (greet) {
-                greetUser();
-            }
         }
     } catch (error) {}
 }
@@ -53,7 +49,12 @@ function greetUser(username) {
         }, 3000)
     } else {
         dynamicText.innerHTML = 'Welcome to This & That School';
-        setTimeout(() => { dynamicText.innerHTML = 'This & That School' }, 3000)
+        dynamicText.classList.add('slidein')
+        setTimeout(() => {
+            dynamicText.innerHTML = 'This & That School';
+            dynamicText.classList.remove('slidein');
+            dynamicText.classList.add('fadein');
+        }, 3000)
     }
 }
 
