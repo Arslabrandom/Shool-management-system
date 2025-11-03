@@ -3,6 +3,6 @@ import { redirectDashboard } from "../controllers/dashboardRedirectController.js
 
 const router = Router();
 
-router.route('/').get(redirectDashboard);
+router.get('/', redirectDashboard);
 
 export default router;

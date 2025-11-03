@@ -1,10 +1,11 @@
 import { Router } from "express";
 import { loginHelper, loginPage } from "../controllers/LoginController.js";
+import { loginValidator } from "../private/middlewares/verifier.js";
 
 const router = Router();
 
-router.route('/').get(loginPage);
+router.get('/', loginPage);
 
-router.route('/:role').post(loginHelper);
+router.post('/:role', loginValidator, loginHelper); 
 
 export default router;

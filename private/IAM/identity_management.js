@@ -2,68 +2,11 @@ import pool from '../DB_INITIALISER/initialiser.js';
 import { randomUUID } from 'crypto';
 import bcrypt from 'bcrypt';
 
-// student object model
-// userid 4 numbers converted to string
-// username max 20 characters
-// password hash
-// role max 10 characters
-
 function closePool() { pool.end() }
 
-// Role verifier function returns role or null
 export function checkForValidRole(role) {
     const Roles = ['admin', 'teacher', 'student', 'parent'];
     return Roles.includes(role);
-}
-
-// Signup data verifier function promise
-const verifySignUpData = (data) => {
-    return new Promise((resolve, reject) => {
-        if (!data.userid || !data.username || !data.role || !data.password) {
-            reject("Incomplete credentials");
-        }
-        for (const key in data) {
-            if (typeof data[key] === 'number') {
-                reject(`All fields given must be strings`);
-            }
-        }
-        if (data.userid.length > 4 || data.userid.length < 4) {
-            reject('userid must be 4 characters');
-        }
-        if (data.username.length > 20) {
-            reject('Username must be less than 20 character');
-        } else if (data.username.length < 5) {
-            reject('Username should be atleast 5 characters')
-        }
-        if (data.password.length < 8) {
-            reject('password must be more than 8 characters');
-        }
-        if (!checkForValidRole(data.role)) {
-            reject('Invalid role specified')
-        }
-        resolve('Data Verified!')
-    })
-}
-
-// login data verifier function promise
-const verifyLoginData = (data) => {
-    return new Promise((resolve, reject) => {
-        if (!data.userid || !data.password) {
-            reject('Incomplete credentials');
-        }
-        for (const key in data) {
-            if (typeof data[key] === 'number') {
-                reject(`All fields given must be strings`);
-            }
-        }
-        if (data.userid.length > 4 || data.userid.length < 4) {
-            reject('User ID can only be 4 characters long');
-        }
-        if (data.password.length < 8) {
-            reject('Password cannot be less than 8 characters')
-        }
-        resolve('Data Verified Successfully!');
-    })
 }
 
 // session data verifier function promise
@@ -121,6 +64,16 @@ const filterExpiredSessions = async () => {
     }
 }
 
+const filterDuplicateSessions = async (userid) => {
+    try {
+        const query = `DELETE FROM sessions WHERE userid = ${userid}`;
+        const [result] = await pool.execute(query);
+        return { filtered: true, message: 'Filtered duplicate sessions', errorno: undefined }
+    } catch (err) {
+        return { filtered: false, message: err.sqlMessage, errorno: err.errno }
+    }
+}
+
 export const removeSession = async (uuid) => {
     try {
         const query = 'DELETE FROM sessions WHERE sessionid = ?';
@@ -129,16 +82,6 @@ export const removeSession = async (uuid) => {
             return { filtered: false, message: 'Session not found', errorno: 404 };
         }
         return { filtered: true, message: 'Logged out', errorno: undefined }
-    } catch (err) {
-        return { filtered: false, message: err.sqlMessage, errorno: err.errno }
-    }
-}
-
-const filterDuplicateSessions = async (userid) => {
-    try {
-        const query = `DELETE FROM sessions WHERE userid = ${userid}`;
-        const [result] = await pool.execute(query);
-        return { filtered: true, message: 'Filtered duplicate sessions', errorno: undefined }
     } catch (err) {
         return { filtered: false, message: err.sqlMessage, errorno: err.errno }
     }
@@ -154,36 +97,32 @@ const verifier = async (data, callbackfn) => {
 }
 
 async function addNewSession(data) {
-    const verifierResponse = await verifier(data, verifySessionData)
+    const verifierResponse = await verifier(data, verifySessionData);
     if (verifierResponse.verified) {
         try {
-            const query = 'INSERT INTO sessions (sessionid, role, username, userid, expires) VALUES (?, ?, ?, ?, ?)'
-            const [result] = await pool.execute(query, [data.sessionId, data.role, data.username, data.userid, data.expires])
-            return { sessionCreated: true, message: 'Session created Successfully', type: 'DBE', errorno: undefined }
+            const query = 'INSERT INTO sessions (sessionid, role, username, userid, expires) VALUES (?, ?, ?, ?, ?)';
+            const [result] = await pool.execute(query, [data.sessionId, data.role, data.username, data.userid, data.expires]);
+            return { sessionCreated: true, message: 'Session created Successfully', type: 'DBE', errorno: undefined };
         } catch (err) {
-            return { sessionCreated: false, message: err.sqlMessage, type: 'DBE', errorno: err.errno }
-        }
+            return { sessionCreated: false, message: err.sqlMessage, type: 'DBE', errorno: err.errno };
+        };
     } else {
-        return { sessionCreated: false, message: verifierResponse.message, type: 'DBE', errorno: undefined }
-    }
-}
+        return { sessionCreated: false, message: verifierResponse.message, type: 'DBE', errorno: undefined };
+    };
+};
 
 // signup function returns userAdded, message, type, error no
 export async function initSignup(data, usertable) {
     if (!usertable) { return { userAdded: false, message: 'Unspecified schema table', type: 'SUE', errorno: 8888 } }
-    const verifierResponse = await verifier(data, verifySignUpData);
     const passWD = bcrypt.hashSync(data.password, 10);
-    if (verifierResponse.verified) {
-        try {
-            const query = `INSERT INTO ${usertable} (userid, username, role, password) VALUES ( ?, ?, ?, ? )`;
-            const [result] = await pool.execute(query, [data.userid, data.username, data.role, passWD]);
-            return { userAdded: true, userid: data.userid, message: 'User Created Seccessfully', type: 'DBE', errorno: 0 };
-        } catch (err) {
-            return { userAdded: false, message: err.sqlMessage, type: 'DBE', errorno: err.errno };
-        }
-    } else {
-        return { userAdded: false, message: `Validation Error: ${verifierResponse.message}`, type: 'VRE', errorno: 4444 }
+    try {
+        const query = `INSERT INTO ${usertable} (userid, username, role, password) VALUES ( ?, ?, ?, ? )`;
+        const [result] = await pool.execute(query, [data.userid, data.username, data.role, passWD]);
+        return { userAdded: true, userid: data.userid, message: 'User Created Seccessfully', type: 'DBE', errorno: 0 };
+    } catch (err) {
+        return { userAdded: false, message: err.sqlMessage, type: 'DBE', errorno: err.errno };
     }
+
 }
 
 async function finduser(data, usertable) {

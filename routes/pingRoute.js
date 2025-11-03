@@ -3,6 +3,6 @@ import { pingHandler } from "../controllers/loginPingController.js";
 
 const router = Router();
 
-router.route('/').post(pingHandler);
+router.post('/', pingHandler);
 
 export default router;

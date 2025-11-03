@@ -7,7 +7,9 @@ import { initSignup, findSession} from './private/IAM/identity_management.js'
 import { authenticator, allowTo } from './private/IAM/access_management.js';
 import { userTypes, ROLES } from './private/constants/constants.js';
 import * as errors from './private/constants/errors.js';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3200;
 const __filename = fileURLToPath(import.meta.url);
