@@ -10,11 +10,9 @@ export const loginValidator = [
 ];
 
 export const signupValidator = [
-    body('userid').exists({checkFalsy: true, checkNull: true}).withMessage("User ID is required.")
-    .trim().isLength({min: 4, max: 4}).withMessage("User ID must be exact 4 characters long."),
     body('username').exists({checkFalsy: true, checkNull: true}).withMessage("User Name is required.")
     .trim().isLength({min: 5, max: 20}).withMessage("User Name must be 5 to 20 character long."),
-    body('role').exists({checkFalsy: true, checkNull: true}).withMessage("Role is required.")
+    param('role').exists({checkFalsy: true, checkNull: true}).withMessage("Role is required.")
     .trim().isIn(['admin', 'teacher', 'student', 'parent']).withMessage("Invalid Role."),
     body('password').exists({checkFalsy: true, checkNull: true}).withMessage("Password is required.")
     .trim().isLength({min: 8}).withMessage("Password must be atleast 8 characters long.")

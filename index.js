@@ -3,9 +3,6 @@ import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
-import { initSignup, findSession} from './private/IAM/identity_management.js'
-import { authenticator, allowTo } from './private/IAM/access_management.js';
-import { userTypes, ROLES } from './private/constants/constants.js';
 import * as errors from './private/constants/errors.js';
 import dotenv from 'dotenv';
 
@@ -30,43 +27,11 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-import loginProcessor from './routes/LoginRoutes.js';
-import logoutProcessor from './routes/LogoutRoutes.js';
-import dashboardProcessor from './routes/DashboardRoutes.js';
-import pingProcessor from './routes/pingRoute.js';
+import enrollmentRoutes from './routes/enrollRoutes.js';
+import apiHandler from './routes/api.js';
 
-app.use('/login', loginProcessor);
-app.use('/logout', logoutProcessor);
-app.use('/dashboard', dashboardProcessor);
-app.use('/pingForPrevLogin', pingProcessor);
-
-app.post('/enroll/student', allowTo([ROLES.ADMIN]), async (req, res) => {
-    const { username, password } = req.body;
-    if (!username || !password) { return res.status(400).json({ message: "Incomplete credentials" }) }
-    const randUserID = Math.round(Math.random() * 9000) + 1000;
-    const obj = {
-        userid: randUserID.toString(),
-        username: username,
-        role: 'student',
-        password: password
-    }
-    const signer = await initSignup(obj, userTypes['student'])
-    return res.json(signer);
-})
-
-app.post('/enroll/teacher', allowTo([ROLES.ADMIN]), async (req, res) => {
-    const { username, password } = req.body;
-    if (!username || !password) { return res.status(400).json({ message: "Incomplete credentials" }) }
-    const randUserID = Math.round(Math.random() * 9000) + 1000;
-    const obj = {
-        userid: randUserID.toString(),
-        username: username,
-        role: 'teacher',
-        password: password
-    }
-    const signer = await initSignup(obj, userTypes['teacher'])
-    return res.json(signer);
-})
+app.use('/enroll', enrollmentRoutes);
+app.use('/api', apiHandler);
 
 app.get('/ancomplaintbox', (req, res) => {
     res.sendFile(anComplaintBoxPath);

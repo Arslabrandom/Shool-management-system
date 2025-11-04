@@ -2,14 +2,10 @@ import { initLogin } from '../private/IAM/identity_management.js';
 import { userTypes } from '../private/constants/constants.js';
 import { validationResult } from 'express-validator';
 
-// ********** fs module setup start **********
-
 import path, { dirname } from 'path';
 import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-// ********** fs module setup end ************
 
 export const loginPage = (req, res) => {
     res.sendFile(path.join(__dirname, '../public/pages/login.html'));

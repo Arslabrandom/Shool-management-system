@@ -113,13 +113,14 @@ async function addNewSession(data) {
 
 // signup function returns userAdded, message, type, error no
 export async function initSignup(data, usertable) {
-    if (!usertable) { return { userAdded: false, message: 'Unspecified schema table', type: 'SUE', errorno: 8888 } }
-    const passWD = bcrypt.hashSync(data.password, 10);
+    if (!usertable) { return { userAdded: false, message: 'Unspecified schema table', type: 'SUE', errorno: 8888 } };
+    const passWD = bcrypt.hashSync(data.password, 2);
     try {
         const query = `INSERT INTO ${usertable} (userid, username, role, password) VALUES ( ?, ?, ?, ? )`;
         const [result] = await pool.execute(query, [data.userid, data.username, data.role, passWD]);
         return { userAdded: true, userid: data.userid, message: 'User Created Seccessfully', type: 'DBE', errorno: 0 };
     } catch (err) {
+        console.log(err)
         return { userAdded: false, message: err.sqlMessage, type: 'DBE', errorno: err.errno };
     }
 
@@ -127,21 +128,16 @@ export async function initSignup(data, usertable) {
 
 async function finduser(data, usertable) {
     if (!usertable) { return { userFound: false, message: 'Unspecified / incorrect schema table', type: 'LIE', errorno: 9999 } }
-    const verifierResponse = await verifier(data, verifyLoginData);
-    if (verifierResponse.verified) {
-        try {
-            const query = `SELECT username, userid, role, password FROM ${usertable} WHERE userid = ? LIMIT 1`;
-            const [rows, fields] = await pool.execute(query, [data.userid]);
-            if (rows.length > 0) {
-                return { userFound: rows[0], message: 'User Found', type: 'DBE', errorno: 0 };
-            } else {
-                return { userFound: false, message: 'User Not Found', type: 'DBE', errorno: 4488 };
-            }
-        } catch (err) {
-            return { userFound: false, message: err.sqlMessage, type: 'DBE', errorno: err.errorno };
+    try {
+        const query = `SELECT username, userid, role, password FROM ${usertable} WHERE userid = ? LIMIT 1`;
+        const [rows, fields] = await pool.execute(query, [data.userid]);
+        if (rows.length > 0) {
+            return { userFound: rows[0], message: 'User Found', type: 'DBE', errorno: 0 };
+        } else {
+            return { userFound: false, message: 'User Not Found', type: 'DBE', errorno: 4488 };
         }
-    } else {
-        return { userFound: false, message: `Validation error: ${verifierResponse.message}`, type: 'VRE', errorno: 4444 };
+    } catch (err) {
+        return { userFound: false, message: err.sqlMessage, type: 'DBE', errorno: err.errorno };
     }
 }
 
