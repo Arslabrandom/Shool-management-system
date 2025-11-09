@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Admin</title>
     <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/public/css/admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
@@ -24,7 +25,68 @@
             LOGOUT
         </button>
     </nav>
+    <div id="utility-header" class="jhantu-container">
+        <button class="utility-option new-application-button" tabindex="1" onclick="alert('pressed!')">
+            New Applications
+            <span class="material-symbols-outlined">
+                draft
+            </span>
+        </button>
+        <button class="utility-option create-application-button" tabindex="2">
+            Create Application
+            <span class="material-symbols-outlined">
+                add_box
+            </span>
+        </button>
+        <button class="utility-option" tabindex="3">
+            Budgets & Spends
+            <span class="material-symbols-outlined">
+                finance_chip
+            </span>
+        </button>
+        <button class="utility-option" tabindex="4">
+            Status & Analytics
+            <span class="material-symbols-outlined">
+                finance
+            </span>
+        </button>
+        <button class="utility-option" tabindex="5">
+            Notifications & Announcements
+            <span class="material-symbols-outlined">
+                campaign
+            </span>
+        </button>
+        <button class="utility-option" tabindex="6">
+            Schedules
+            <span class="material-symbols-outlined">
+                schedule
+            </span>
+        </button>
+        <button class="utility-option" tabindex="7">
+            Content & Blogs
+            <span class="material-symbols-outlined">
+                article
+            </span>
+        </button>
+    </div>
+    <div id="status-section">
+        <div class="section-sub section-teachers">
+            <span class="role-title">Teachers</span>Present<span class="count-group"><span
+class="present-count">18</span>&nbsp;/&nbsp;<span class="total-count">19</span></span>
+            <span class="material-symbols-outlined more-teacher-details">
+                arrow_circle_right
+            </span>
+        </div>
+        <div class="section-sub section-students">
+            <span class="role-title">Students</span>Present<span class="count-group"><span
+                    class="present-count">82</span>&nbsp;/&nbsp;<span class="total-count">109</span></span>
+            <span class="material-symbols-outlined more-student-details">
+                arrow_circle_right
+            </span>
+        </div>
+    </div>
     <script src="/js/admin.js"></script>
+    <script src="/public/js/admin.js"></script>
 </body>
 
 </html>

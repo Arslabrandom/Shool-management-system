@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Libertinus+Keyboard&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Lato", sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 0 48px;
+}
+
+#navbar {
+    padding: 18px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid black;
+}
+
+#logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-right: auto;
+}
+
+#tracking-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+#tracking-form > input, button {
+    padding: 4px 8px;
+}
+
+#main-application-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.dotted-border {
+    border-bottom: 2px dotted grey;
+}
+
+.form-group {
+    padding: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 34px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group > label {
+    font-size: .8rem;
+}
+
+.input-group > input, select {
+    padding: 8px 12px;
+}
+
+#submit-btn {
+    padding: 12px 18px;
+    max-width: 120px;
+    margin: 18px 0;
+    background-color: green;
+    font-size: 1.2rem;
+    border: 1px solid black;
+}
+
+#main-footer {
+    border-top: 1px solid black;
+    padding: 12px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+#instructions-container {
+    background-color: white;
+    padding: 0 14px 14px 14px;
+    display: flex;
+    flex-direction: column;
+}
+
+.instructions-heading {
+    font-size: 1.2rem;
+    padding: 12px 14px;
+    border-bottom: 1px solid black;
+    margin-bottom: 14px;
+}
+
+.instructions-para {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid black;
+    gap: 4px;
+    line-height: 1.8;
+}
+
+.instructions-para > span {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+#proceed-btn {
+    padding: 12px 14px;
+    background-color: green;
+    border: 1px solid black;
+    font-size: 1.2rem;
+    float: left;
+    width: fit-content;
+    align-self: flex-end;
+    color: white;
+}

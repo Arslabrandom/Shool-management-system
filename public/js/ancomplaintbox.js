@@ -14,7 +14,7 @@ async function submitC() {
     }
     loader.style.display = 'block';
     try {
-        let response = await fetch('/anonymouscomplaint', {
+        let response = await fetch('/api/anonymouscomplaint', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

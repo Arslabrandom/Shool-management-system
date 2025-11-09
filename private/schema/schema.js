@@ -33,3 +33,21 @@ export async function chechForIdDuplicacy(nid) {
         return {duplicateId: null, message: err.sqlMessage};
     };
 };
+
+/**
+ * Returns Pending / Drafted Application
+ */
+
+export async function getPendingApplications() {
+    try {
+        const query = 'SELECT appRef, applicantRole, appName, appPhoneNumber FROM applicationDrafts WHERE !reviewed';
+        const [rows, fields] = await pool.execute(query);
+        if (rows.length > 0) {
+            return { error: false, message: "Pending Application found", applicationsP: rows};
+        } else {
+            return {error: false, message: "No Applications found", applicationsP: null};
+        };
+    } catch (err) {
+        return { error: true, message: err.sqlMessage, applicationsP: null};
+    };
+};

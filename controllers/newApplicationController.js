@@ -1,6 +1,6 @@
 import { query, validationResult } from "express-validator";
 import { applicationModelCreator } from "../private/small_helper_function/hFunctions.js";
-import { initApplication, chechForIdDuplicacy } from "../private/schema/schema.js";
+import { initApplication, chechForIdDuplicacy, getPendingApplications } from "../private/schema/schema.js";
 
 export const newApplication = async ( req, res) => {
     const vError = validationResult(req);
@@ -26,3 +26,11 @@ export const duplIdCheck = async ( req, res ) => {
         res.json({duplicateId: false, message: queryResult.message});
     }
 }
+
+export const PDApplications = async  (req, res) => {
+    const queryResult = await getPendingApplications();
+    if (queryResult.error) {
+        return res.status(404).json(queryResult);
+    }
+    res.json(queryResult);
+};

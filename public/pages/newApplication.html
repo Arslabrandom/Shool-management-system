@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications - This&ThatSchool</title>
+    <link rel="stylesheet" href="/css/newApplication.css">          
+</head>
+
+<body>
+    <div id="navbar">
+        <span id="logo">This & That School - Application Form</span>
+        <form action="#" id="tracking-form">
+            <label for="appref">Reference No:</label>
+            <input type="text" id="appref" placeholder="XX-123456" required pattern="[A-Za-z]{2}-\d{6}"
+                title="Please enter a valid code in the format XX-123456">
+            <button type="submit">Track</button>
+        </form>
+    </div>
+    <form action="#" id="main-application-form">
+        <div class="form-group application-details dotted-border">
+            <div class="input-group">
+                <label for="applicantRole">Applying as a</label>
+                <select name="applicantRole" id="applicantRole">
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="forStandard">For Standard</label>
+                <input type="text" name="forStandard" id="forStandard" maxlength="10" required>
+            </div>
+            <div class="input-group">
+                <label for="forSubject">For Subject</label>
+                <input type="text" name="forSubject" id="forSubject" max="10" disabled required>
+            </div>
+        </div>
+        <div class="form-group applicant-name">
+            <div class="input-group">
+                <label for="appName">Applicant's Name</label>
+                <input type="text" name="appName" id="appName" placeholder="Mandatory" maxlength="20" required>
+            </div>
+            <div class="input-group">
+                <label for="appFirstName">Applicant's First Name</label>
+                <input type="text" name="appFirstName" id="appFirstName" placeholder="Optional" maxlength="20">
+            </div>
+            <div class="input-group">
+                <label for="appLastName">Applicant's Last Name</label>
+                <input type="text" name="appLastName" id="appLastName" placeholder="Optional" maxlength="20">
+            </div>
+        </div>
+        <div class="form-group father-name">
+            <div class="input-group">
+                <label for="appFatherName">Father's Name</label>
+                <input type="text" name="appFatherName" id="appFatherName" placeholder="Mandatory" maxlength="20"
+                    required>
+            </div>
+            <div class="input-group">
+                <label for="appFatherFirstName">Father's First Name</label>
+                <input type="text" name="appFatherFirstName" id="appFatherFirstName" placeholder="Optional"
+                    maxlength="20">
+            </div>
+            <div class="input-group">
+                <label for="appFatherLastName">Father's Last Name</label>
+                <input type="text" name="appFatherLastName" id="appFatherLastName" placeholder="Optional"
+                    maxlength="20">
+            </div>
+        </div>
+        <div class="form-group mother-name dotted-border">
+            <div class="input-group">
+                <label for="appMotherName">Mother's Name</label>
+                <input type="text" name="appMotherName" id="appMotherName" placeholder="Mandatory" maxlength="20"
+                    required>
+            </div>
+            <div class="input-group">
+                <label for="appMotherFirstName">Mother's First Name</label>
+                <input type="text" name="appMotherFirstName" id="appMotherFirstName" placeholder="Optional"
+                    maxlength="20">
+            </div>
+            <div class="input-group">
+                <label for="appMotherLastName">Mother's Last Name</label>
+                <input type="text" name="appMotherLastName" id="appMotherLastName" placeholder="Optional"
+                    maxlength="20">
+            </div>
+        </div>
+        <div class="form-group dotted-border">
+            <div class="input-group">
+                <label for="appDateOfBirth">Date of Birth</label>
+                <input type="date" required name="appDateOfBirth" id="appDateOfBirth">
+            </div>
+        </div>
+        <div class="form-group dotted-border">
+            <div class="input-group">
+                <label for="appNidType">National ID Type</label>
+                <Select name="appNidType" id="appNidType" required>
+                    <option value="aadhar">UIDAI AADHAR Card</option>
+                </Select>
+            </div>
+            <div class="input-group">
+                <label for="appNidNumber">ID Number</label>
+                <input type="tel" name="appNidNumber" id="appNidNumber" placeholder="XXXX-XXXX-XXXX" required
+                    maxlength="20">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <label for="appAddress">Address: House-no / Street / Area / Locality</label>
+                <input type="text" name="appAddress" id="appAddress" placeholder="House-no | Street | Area | Locality"
+                    required maxlength="100">
+            </div>
+            <div class="input-group">
+                <label for="appCity">City / Town / Village</label>
+                <input type="text" name="appCity" id="appCity" required placeholder="City / Town / Village"
+                    maxlength="20">
+            </div>
+            <div class="input-group">
+                <label for="appPostCode">Post Code</label>
+                <input type="number" name="appPostCode" id="appPostCode" placeholder="XXXXXX" required maxlength="20">
+            </div>
+            <div class="input-group">
+                <label for="appState">State / District</label>
+                <input type="text" name="appState" id="appState" placeholder="State / District" required maxlength="20">
+            </div>
+        </div>
+        <div class="form-group dotted-border">
+            <div class="input-group">
+                <label for="appPhoneNumber">Phone Number</label>
+                <input type="number" name="appPhoneNumber" id="appPhoneNumber" required placeholder="XXXXXXXXX"
+                    maxlength="10">
+            </div>
+            <div class="input-group">
+                <label for="appEmail">E-mail</label>
+                <input type="email" name="appEmail" id="appEmail" placeholder="abcdef@xyz.com">
+            </div>
+        </div>
+        <button type="submit" id="submit-btn">Next</button>
+    </form>
+    <footer id="main-footer">
+        Thank you for choosing us ❤
+    </footer>
+    <script src="/js/newApplication.js"></script>
+</body>
+
+</html>

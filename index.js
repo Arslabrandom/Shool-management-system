@@ -48,8 +48,17 @@ app.post('/anonymouscomplaint', (req, res) => {
     }
 })
 
+app.get('/applicationInstructions', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'pages', 'Instructions.html'));
+});
+
+
+app.get('/ApplicationForm', (req,res) => {
+    res.sendFile(path.join(__dirname, 'public', 'pages', 'newApplication.html'));
+});
+
 app.get('/underdevelopment', (req, res) => {
-    res.send(errors.maintenance_error)
+    res.send(errors.maintenance_error);
 })
 
 app.listen(PORT, () => {

@@ -14,7 +14,7 @@ loginBtn.style.display='none';
 const prvL = async (greet) => {
     try {
         loader.style.display = 'block';
-        const response = await fetch('/pingForPrevLogin', { method: 'POST' })
+        const response = await fetch('/api/pingForPrevLogin', { method: 'POST' })
         const result = await response.json();
         if (result.prevLogged) {
             let str = result.username;
@@ -35,7 +35,7 @@ const prvL = async (greet) => {
 }
 
 async function arm96mxjck() {
-    window.location.href = '/dashboard'
+    window.location.href = '/api/dashboard'
 }
 
 function greetUser(username) {
@@ -59,5 +59,5 @@ function greetUser(username) {
 }
 
 function developement() {
-    window.location.href = '/underdevelopment'
+    window.location.href = '/api/underdevelopment'
 }

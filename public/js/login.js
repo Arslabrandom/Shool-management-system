@@ -17,7 +17,7 @@ let icon = {
 async function Login(role, creds) {
     loader.style.display = 'block';
     try {
-        const response = await fetch(`/login/${role}`, {
+        const response = await fetch(`/api/login/${role}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -28,7 +28,7 @@ async function Login(role, creds) {
         const data = await response.json();
         if (data.login) {
             showToast(`${data.message} Redirecting`, "success", 1000)
-            setTimeout(()=>{window.location.href = '/dashboard';}, 1100)
+            setTimeout(()=>{window.location.href = '/api/dashboard';}, 1100)
         } else {
             showToast(data.message, "danger", 2000);
         }
